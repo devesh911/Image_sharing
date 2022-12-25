@@ -4,22 +4,15 @@ import { RiHomeFill } from 'react-icons/ri';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import logo from '../assets/logo.png'
+import { categories } from '../utils/data';
 const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
   };
 
-  const categories = [
-    { name: 'Phtography' },
-    { name: 'Videgraphy' },
-    { name: 'Animation' },
-    { name: 'Coding' },
-    { name: 'Hunting' },
-    { name: 'Other' },
-  ]
 
   const isNotActiveStyle = 'flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize';
-  const isActiveStyle = 'flex items-center px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize';
+  const isActiveStyle = 'flex items-center px-7 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize';
   return (
     <div className="flex flex-col  justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
       <div className="flex flex-col">
@@ -30,6 +23,7 @@ const Sidebar = ({ user, closeToggle }) => {
         >
           <img src={logo} alt="" className="w-full" />
         </Link>
+        <div className="flex flex-col gap-5">
         <NavLink
           to="/"
           className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
@@ -37,19 +31,36 @@ const Sidebar = ({ user, closeToggle }) => {
         >
           <RiHomeFill />Home
         </NavLink>
-        <h3 className="mt-2 px-5 text-base 2xl:text-xl">Discover more
-          {categories.slice(0, categories.length - 1).map((category) => (
-          <NavLink
+        <h3 className="mt-2 px-5 text-base 2xl:text-xl">Discover more</h3>
+          {categories.map((category) => (
+         <div className="flex justify-between">   
+           <NavLink
             to={`/category/${category.name}`}
             onClick={handleCloseSidebar}
             className={({isActive})=>isActive?isActiveStyle:isNotActiveStyle}
             key={category.name}
-          >
-            {category.name}
-          </NavLink>
+          > 
+           {category.name}
+           
+           
+          </NavLink> 
+          <div>
+            <img src={category.image} alt="" className="w-10 h-10 mr-3 rounded-full"/>
+          </div>
+           </div>
+      
+
         ))}
-        </h3>
+        </div>  
       </div>
+      {user && (
+        <Link to={`user-profile/${user._id}`} className="flex flex-row items-center my-5 mx-3 gap-2 p-2 bg-white round-lg shadow-sm hover:border-2 "
+        onClick={handleCloseSidebar}
+        >
+          <img src={user.image} alt="" className="w-10 h-10 rounded-full"/>
+          <p>{user.userName}</p>
+        </Link>
+      )}
     </div>
   )
 }

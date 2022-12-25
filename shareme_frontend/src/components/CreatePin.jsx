@@ -37,8 +37,10 @@ const CreatePin = ({user}) => {
         console.log('image upload error')
       })
     }
-    else{̀
-      setWrongImageType(true)
+
+    else{
+  setWrongImageType(true)
+   
     }
   }
   
